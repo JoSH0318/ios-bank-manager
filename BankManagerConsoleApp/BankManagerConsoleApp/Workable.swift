@@ -7,7 +7,6 @@
 
 import Foundation
 
-protocol Workable: Operation {
-    var clientQueue: Queue<LinkedList<Client>> { get }
-    var workType: WorkType { get }
+protocol Workable {
+    func deal(with client: Client)
 }

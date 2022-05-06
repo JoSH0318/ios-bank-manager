@@ -8,33 +8,22 @@
 import Foundation
 
 final class Bank {
-    private var clerks: [Workable] = []
-    private var loanClientQueue = Queue(list: LinkedList<Client>())
-    private var depositClientQueue = Queue(list: LinkedList<Client>())
-    private let operationQueue = OperationQueue()
+    private var clerk: Workable
+    private var clientsQueue = Queue(list: LinkedList<Client>())
+    private let loanClerksQueue = OperationQueue()
+    private let depositClerksQueue = OperationQueue()
     private(set) var loanClerksCount: Int
     private(set) var depositClerksCount: Int
     
     init(loanClerksCount: Int, depositClerksCount: Int) {
         self.loanClerksCount = loanClerksCount
         self.depositClerksCount = depositClerksCount
-    }
-    
-    func assignByWork(_ loanClerksCount: Int, _ depositClerksCount: Int) {
-        for _ in 0..<loanClerksCount {
-            let loanClerk = BankClerk(workType: .loan, queue: loanClientQueue)
-            clerks.append(loanClerk)
-        }
-        
-        for _ in 0..<depositClerksCount {
-            let depositClerk = BankClerk(workType: .deposit, queue: depositClientQueue)
-            clerks.append(depositClerk)
-        }
+        self.clerk = BankClerk()
     }
     
     func executeBankWork() {
         receiveClients()
-        let totalClientsCount = loanClientQueue.count + depositClientQueue.count
+        let totalClientsCount = clientsQueue.count
         let totalWorkTime = measureWorkTime {
             executeWork()
         }
@@ -42,21 +31,11 @@ final class Bank {
         let resultMessage = String(format: resultDescription, totalClientsCount, totalWorkTime)
         
         print(resultMessage)
-        clerks.removeAll()
     }
     
     private func receiveClients() {
         for order in 1...Int.random(in: 10...30) {
-            arrangeByWorkType(Client(order))
-        }
-    }
-    
-    private func arrangeByWorkType(_ client: Client) {
-        switch client.requirementType {
-        case .loan:
-            loanClientQueue.enqueue(client)
-        case .deposit:
-            depositClientQueue.enqueue(client)
+            clientsQueue.enqueue(Client(order))
         }
     }
     
@@ -68,7 +47,19 @@ final class Bank {
     }
     
     private func executeWork() {
-        operationQueue.maxConcurrentOperationCount = clerks.count
-        operationQueue.addOperations(clerks, waitUntilFinished: true)
+        loanClerksQueue.maxConcurrentOperationCount = loanClerksCount
+        depositClerksQueue.maxConcurrentOperationCount = depositClerksCount
+        while let client = clientsQueue.dequeue() {
+            switch client.requirementType {
+            case .loan:
+                loanClerksQueue.addOperation {
+                    self.clerk.deal(with: client)
+                }
+            case .deposit:
+                depositClerksQueue.addOperation {
+                    self.clerk.deal(with: client)
+                }
+            }
+        }
     }
 }

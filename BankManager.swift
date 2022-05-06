@@ -22,20 +22,19 @@ final class BankManager {
     }
     
     func taskStart() {
-        bank.assignByWork(bank.loanClerksCount, bank.depositClerksCount)
         showMenuMessage()
         
-        guard let selectedOption = SelectOptionType(rawValue: inputNumber()) else {
-            return taskStart()
-        }
-        
-        switch selectedOption {
-        case .open:
+//        guard let selectedOption = SelectOptionType(rawValue: inputNumber()) else {
+//            return taskStart()
+//        }
+//
+//        switch selectedOption {
+//        case .open:
             bank.executeBankWork()
-            return taskStart()
-        case .close:
-            return
-        }
+//            return taskStart()
+//        case .close:
+//            return
+//        }
     }
     
     private func showMenuMessage() {
@@ -49,3 +48,4 @@ final class BankManager {
         return selectedNumber
     }
 }
+
