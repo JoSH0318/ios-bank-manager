@@ -16,12 +16,15 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configView()
+        executeConsolApp()
+    }
+    
+    func configView() {
         self.view = MainView()
         self.view.backgroundColor = .white
         guard let mainView = self.view as? MainView else {return}
         mainView.makeView()
-        
-        executeConsolApp()
     }
     
     func executeConsolApp() {
