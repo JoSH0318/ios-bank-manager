@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Queue<List: Listable> {
+struct Queue<List: Listable> {
     private var list: List
     
     init(list: List) {
