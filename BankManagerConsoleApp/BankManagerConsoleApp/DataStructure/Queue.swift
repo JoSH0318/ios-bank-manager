@@ -26,15 +26,15 @@ struct Queue<List: Listable> {
         return list.first
     }
     
-    func enqueue(_ value: List.Element) {
+    mutating func enqueue(_ value: List.Element) {
         list.append(value: value)
     }
     
-    func dequeue() -> List.Element? {
+    mutating func dequeue() -> List.Element? {
         return list.removeFirst()
     }
     
-    func clear() {
+    mutating func clear() {
         list.removeAll()
     }
 }
