@@ -28,9 +28,8 @@ class ViewController: UIViewController {
     }
     
     func executeConsolApp() {
-        let a = Bank(loanClerksCount: 1, depositClerksCount: 2)
-        let b = BankManager(of: a)
-        b.taskStart()
+        let bank = Bank(loanClerksCount: 1, depositClerksCount: 2)
+        bankManager = BankManager(of: bank)
     }
 }
 
