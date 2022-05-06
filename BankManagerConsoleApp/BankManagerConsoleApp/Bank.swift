@@ -51,15 +51,23 @@ final class Bank {
         loanClerksQueue.maxConcurrentOperationCount = loanClerksCount
         depositClerksQueue.maxConcurrentOperationCount = depositClerksCount
         while let client = clientsQueue.dequeue() {
-            switch client.requirementType {
-            case .loan:
-                loanClerksQueue.addOperation {
-                    self.clerk.deal(with: client)
-                }
-            case .deposit:
-                depositClerksQueue.addOperation {
-                    self.clerk.deal(with: client)
-                }
+            arrangeByWork(of: client)
+        }
+        clerkGroup.wait()
+    }
+    
+    private func arrangeByWork(of client: Client) {
+        clerkGroup.enter()
+        switch client.requirementType {
+        case .loan:
+            loanClerksQueue.addOperation {
+                self.clerk.deal(with: client)
+                self.clerkGroup.leave()
+            }
+        case .deposit:
+            depositClerksQueue.addOperation {
+                self.clerk.deal(with: client)
+                self.clerkGroup.leave()
             }
         }
     }
