@@ -107,8 +107,8 @@
 				03CE4642282441BA00DD5C7B /* Bank.swift */,
 				03CE4639282441BA00DD5C7B /* BankClerk.swift */,
 				03CE4640282441BA00DD5C7B /* Workable.swift */,
-				03CE463A282441BA00DD5C7B /* WorkType.swift */,
 				03CE4641282441BA00DD5C7B /* Client.swift */,
+				03CE463A282441BA00DD5C7B /* WorkType.swift */,
 				03CE4644282441BA00DD5C7B /* SelectOption.swift */,
 			);
 			name = BankManagerConsoleApp;

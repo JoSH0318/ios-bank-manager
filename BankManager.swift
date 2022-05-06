@@ -29,12 +29,7 @@ final class BankManager {
     private func showMenuMessage() {
         print(Text.open)
         print(Text.close)
-        print(Text.input, terminator: Text.empty)
-    }
-    
-    private func inputNumber() -> String {
-        let selectedNumber = readLine() ?? Text.empty
-        return selectedNumber
+        print(Text.input)
     }
 }
 
