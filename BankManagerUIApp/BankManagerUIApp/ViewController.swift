@@ -7,6 +7,12 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    private var bankManager: BankManager? {
+        didSet {
+            bankManager?.taskStart()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
