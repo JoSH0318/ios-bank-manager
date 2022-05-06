@@ -12,6 +12,7 @@ final class Bank {
     private var clientsQueue = Queue(list: LinkedList<Client>())
     private let loanClerksQueue = OperationQueue()
     private let depositClerksQueue = OperationQueue()
+    private let clerkGroup = DispatchGroup()
     private(set) var loanClerksCount: Int
     private(set) var depositClerksCount: Int
     
