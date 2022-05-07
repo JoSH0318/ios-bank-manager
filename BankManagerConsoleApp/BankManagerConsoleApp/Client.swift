@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Client {
+final class Client {
     private(set) var orderNumber: Int
     private(set) var requirementType: WorkType
     

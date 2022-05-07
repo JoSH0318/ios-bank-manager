@@ -124,7 +124,7 @@ class MainView: UIView {
         stackView.spacing = 0
         return stackView
     }()
-
+    
     let waitingListStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -134,7 +134,7 @@ class MainView: UIView {
         stackView.spacing = 10
         return stackView
     }()
-
+    
     let workingListStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -145,30 +145,11 @@ class MainView: UIView {
         return stackView
     }()
     
-    let waitingClientLabel: UILabel = {
-        let label = UILabel()
-        label.text = "1-예금"
-        label.textColor = .black
-        label.backgroundColor = .white
-        label.font = .systemFont(ofSize: 17)
-        label.textAlignment = .center
-        return label
-    }()
-    
-    let workingClientLabel: UILabel = {
-        let label = UILabel()
-        label.text = "1-예금"
-        label.textColor = .black
-        label.backgroundColor = .white
-        label.font = .systemFont(ofSize: 17)
-        label.textAlignment = .center
-        return label
-    }()
-    
     //MARK: - method
     func makeView() {
         configTotalStackView()
         configScrollView()
+        self.backgroundColor = .white
     }
     
     func configTotalStackView() {
@@ -231,11 +212,6 @@ class MainView: UIView {
     }
     
     func configListStackView() {
-        for _ in 0...50 {
-            waitingListStackView.addArrangedSubview(makeLabel())
-        }
-//        waitingListStackView.addArrangedSubview(waitingClientLabel)
-        workingListStackView.addArrangedSubview(workingClientLabel)
         listStackView.addArrangedSubview(waitingListStackView)
         listStackView.addArrangedSubview(workingListStackView)
         scrollView.addSubview(listStackView)
@@ -252,14 +228,51 @@ class MainView: UIView {
         ])
     }
     
-    func makeLabel() -> UILabel {
+    func makeClientLabel(_ client: Client) -> UILabel {
         let label = UILabel()
-        label.text = "1-예금"
-        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "\(client.orderNumber)-\(client.requirementType.description)"
         label.backgroundColor = .white
         label.font = .systemFont(ofSize: 17)
         label.textAlignment = .center
+        
+        switch client.requirementType {
+        case .loan:
+            label.textColor = .purple
+        case .deposit:
+            label.textColor = .black
+        }
         return label
     }
+    
+    func add(waitingClientLabel: UILabel) {
+        waitingListStackView.addArrangedSubview(waitingClientLabel)
+    }
+    
+    func removeWaitingLabelAndAdd(_ workingLabel: UILabel) {
+        guard let labelArray = waitingListStackView.subviews as? [UILabel] else {
+            return
+        }
+        let label = workingLabel.text
+        labelArray.forEach {
+            if $0.text == label {
+                $0.removeFromSuperview()
+                workingListStackView.addArrangedSubview($0)
+            }
+        }
+    }
+    
+    func remove(_ workingClient: Client) {
+        DispatchQueue.main.async { [self] in
+            guard let labelArray = workingListStackView.subviews as? [UILabel] else {
+                return
+            }
+            let label = "\(workingClient.orderNumber)-\(workingClient.requirementType.description)"
+            labelArray.forEach {
+                if $0.text == label {
+                    $0.removeFromSuperview()
+                }
+            }
+        }
+    }
 }
-
