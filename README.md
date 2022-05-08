@@ -1,7 +1,7 @@
 # 은행창구 매니저 README
 
 # 🧮 은행 창구 매니저
-> 프로젝트 기간 2022.04.25 ~ 2022.04.  
+> 프로젝트 기간 2022.04.25 ~ 2022.05.07  
 팀원 : [malrang](https://github.com/kinggoguma), [mmim](https://github.com/JoSH0318) / 리뷰어 : [❤️ Hyunable](https://github.com/hyunable)
 
 - [프로젝트 목표](#프로젝트-목표)
@@ -15,21 +15,30 @@
     + [고민했던 것들(트러블 슈팅)](#고민한-점트러블-슈팅)
     + [배운 개념](#배운-개념)
     + [PR 후 개선사항](#pr-후-개선사항)
+- [STEP 3 기능 구현](#step-3-기능-구현)
+    + [고민했던 것들(트러블 슈팅)](#고민한-점트러블-슈팅)
+    + [배운 개념](#배운-개념)
+    + [PR 후 개선사항](#pr-후-개선사항)
+ - [STEP 4 기능 구현](#step-4-기능-구현)
+    + [고민했던 것들(트러블 슈팅)](#고민한-점트러블-슈팅)
+    + [배운 개념](#배운-개념)
 - [Ground Rules](#ground-rules)
 
 ---
 ## 프로젝트 목표
 1. OOP(Object-Oriented Programming)
 2. POP(Protocol-Oriented Programming)
+3. SOLID 원칙
 
 ---
 
 ## 실행화면
+![](https://i.imgur.com/DRNnZyH.gif)
 
 ---
 
 ## UML
-<img width="700" src="https://i.imgur.com/RWguZju.jpg"/>
+<img width="700" src="https://i.imgur.com/WLXWO4X.png"/>
 
 ---
 
@@ -148,30 +157,34 @@ struct DoubleLinkedList<T> {
     - func insert(valut: , at:): 값을 원하는 index에 삽입하는 기능 구현
 
 2. LinkedList 를 이용한 Queue 구현
-> 기존에는 `LinkedList` 를 `Queue(First in First Out)` 처럼 사용할수있도록 구현하였다.  
-> `LinkedList`가 `Queue`처럼 사용될 순 있으나, 모든 `Queue`를 대변하는 자료구조는 아니다.  
-> `LinkedList`는 `Queue`를 구성하는 하나의 방법론일 뿐이기 때문에 `Queue`타입 객체를 만들어주었다.  
-> 이를 통해 만약 새로운 자료구조 방법론으로 교체된다 하더라도 `Queue`의 수정이 거의 없고, 용이하다.  
+>기존에는 `LinkedList` 를 `Queue(First in First Out)` 처럼 사용할수있도록 구현하였다.
+>`LinkedList`가 `Queue`처럼 사용될 순 있으나, 모든 `Queue`를 대변하는 자료구조는 아니다.
+>`LinkedList`는 `Queue`를 구성하는 하나의 방법론일 뿐이기 때문에 `Queue`타입 객체를 만들어주었다.
+>이를 통해 만약 새로운 자료구조 방법론으로 교체된다 하더라도 `Queue`의 수정이 거의 없고, 용이하다.
 
 ---
 ## STEP 2 기능 구현
-1. `struct BankManager`
-    - `start()`: 은행을 개점하거나 종료하는 메서드
-    - `printOption()`: `BankManagerConsoleApp` 시작시 출력될 텍스트의 모음
-    - `inputNumber()`: 유저에게 입력값을 받는 메서드
-2. `struct Bank`
-    - `let clerk`: 은행에서 근무중인 은행원
-    - `var cliendQueue`: 은행에 방문하여 접수한 고객들의 대기열
-    - `var numberOfClients`: 은행에 방문한 총 고객의 수
-    - `executeBankWork()`: 은행에 방문한 고객들을 대기열에 저장하고 저장한 순서대로 은행원 에게 인계해주는 메서드
-    - `receiveClients()`: 은행의 대기열에 10~30 사이의 랜덤한 수의 고객들을 저장해주는 메서드
-    - `serveClients()`: 은행의 대기열이 비어있을때까지 접수한순서대로 고객을 은행원에게 인계하는 메서드
-3. `protocol Workable`
-    - `func deal(with client: Client?)`: 은행에서 대기중인 손님을 인계 받아 업무를 처리해주는 메서드
-4. `struct BankClerk: Workable`
-    - `deal(with client: Client?)`: 은행에서 대기중인 손님을 인계 받아 업무를 처리해주는 메서드
-5. `struct Client`
-    - `var orderNumber`: 은행의 대기번호 
+1️⃣ `struct BankManager`
+- `start()`: 은행을 개점하거나 종료하는 메서드
+- `printOption()`: `BankManagerConsoleApp` 시작시 출력될 텍스트의 모음
+- `inputNumber()`: 유저에게 입력값을 받는 메서드
+
+2️⃣ `struct Bank`
+- `let clerk`: 은행에서 근무중인 은행원
+- `var cliendQueue`: 은행에 방문하여 접수한 고객들의 대기열
+- `var numberOfClients`: 은행에 방문한 총 고객의 수
+- `executeBankWork()`: 은행에 방문한 고객들을 대기열에 저장하고 저장한 순서대로 은행원 에게 인계해주는 메서드
+- `receiveClients()`: 은행의 대기열에 10~30 사이의 랜덤한 수의 고객들을 저장해주는 메서드
+- `serveClients()`: 은행의 대기열이 비어있을때까지 접수한순서대로 고객을 은행원에게 인계하는 메서드
+
+3️⃣ `protocol Workable`
+- `func deal(with client: Client?)`: 은행에서 대기중인 손님을 인계 받아 업무를 처리해주는 메서드
+
+4️⃣ `struct BankClerk: Workable`
+- `deal(with client: Client?)`: 은행에서 대기중인 손님을 인계 받아 업무를 처리해주는 메서드
+
+5️⃣ `struct Client`
+- `var orderNumber`: 은행의 대기번호 
 
 ### 고민한 점(트러블 슈팅)
 1️⃣ 은행원 객체를 따로 구현할 것인가?
@@ -188,13 +201,12 @@ struct DoubleLinkedList<T> {
 > Workable porotocol을 생성하고, 이를 채택하고 있는 모든 객체를 Bank에서 소유할 수 있도록 변경했다.
 > BankClerk은 Workable을 채택하고, Bank의 clerk 프로퍼티의 타입은 Workable로 설정했다.
 
-
 ### 질문사항
 1️⃣ 긴 문구를 처리하는 방법에 대하여 🤔
 > 📎 일단 저희는 magic literal을 없애기 위해서 name space를 사용했습니다.
 
-요구사항에 보면 아래와 같은 문구가 있습니다!  
-![](https://i.imgur.com/T2N5k8d.png)  
+요구사항에 보면 아래와 같은 문구가 있습니다!
+![](https://i.imgur.com/T2N5k8d.png)
 이런 경우 magic literal을 피하기 위해, name space에 magic literal를 넣어준다면 
 아래 코드와 같이 name space를 만들어주어야하고
 ```swift
@@ -410,13 +422,136 @@ mutating func taskStart() {
 ![](https://i.imgur.com/0qg0WCf.png)
 
 ### 배운 개념
-`@discardableResult`  
-`DispatchQueue`  
-`DispatchGroup`  
-`DispatchWorkitem`  
-`DispatchSemaphore, wait(), signal()`  
+`@discardableResult`
+`DispatchQueue`
+`DispatchGroup`
+`DispatchWorkitem`
+`DispatchSemaphore, wait(), signal()`
 
 ### PR 후 개선사항
+1️⃣ operation 타입화 -> BlockOperation 방법으로 변경
+- 이전 PR에서는 operation을 상속받은 `BankClerk` class를 만들어 task를 타입화하였다.
+- 보통 이러한 방법은 task의 코드가 무거워지는 경우 사용하거나, operation을 상속받는 여러 class 객체가 있을 때 사용한다.
+- 이를 통해 `각각의 oepration을 상속 받는 class`가 `하나의 작업`을 `하나의 스레드`에서 작업을 처리할 수 있도록 한다. (물론 각자의 class를 operationQueue에 추가해주는 방법을 통해서 -> operationQueue.addOperations([class1, class2]), waitUntilFinished: true)
+- 이번 프로젝트는 비교적 task의 코드가 간결하고 oepration을 상속 받는 class가 한 개뿐이다.
+- ❗️따라서 이번 프로젝트에 적합한 방법이 아니다.
+- BlockOperation처럼 operationQueue에 직접 작업할 코드블럭을 넣어주는 방식으로 변경했다.
+- 대신 operationQueue를 두 개를 만들어서 loan, deposit의 task을 각자의 Queue에서 처리하도록 했다.
+```swift
+loanClerksQueue.maxConcurrentOperationCount = loanClerksCount
+depositClerksQueue.maxConcurrentOperationCount = depositClerksCount
+
+// ...some code
+
+switch client.requirementType {
+case .loan:
+    loanClerksQueue.addOperation { [self] in
+        clerk.deal(with: client)
+    }
+case .deposit:
+    depositClerksQueue.addOperation { [self] in
+        clerk.deal(with: client)
+    }
+}
+
+```
+
+---
+## STEP 4 기능 구현
+**`BankManager Consol App` 을 `IOS UIApp` 으로 전환**
+
+1️⃣ `class MainView`
+- `BankManager UIApp` 에서 사용될 `scrollView`, `stackView` 등 루트뷰의 설정을 포함한 타입.
+- `makeClientLabel(_ client: Client) -> UILabel`:
+  -  은행에 방문한 손님(Client) 를 인자로 받아 손님의 정보를 토대로 `Label` 을 만들어 반환하는 메서드
+- `add(waitingClientLabel: UILabel)`:
+  -  Label 을 인자로 받아 대기중 스택뷰(waitingListStackView)에 추가 해주는 메서드
+- `removeWaitingLabelAndAdd(_ workingLabel: UILabel)`:
+  -  Label을 인자로 받아 대기중 스택뷰에서 Label.text 가 일치하는 Label 이 있다면 대기중 스택뷰에서 제거한후 업무중 스택뷰(workingListStackView) 에 해당 Label 을 추가하는 메서드
+- `remove(_ workingClient: Client)`:
+  - 손님(Client)를 인자로 받아 업무중 스택뷰(waitingListStackView)에서 손님의 정보와 일치하는 Label 을 찾아 제거하는 메서드
+
+2️⃣ `class BankManager`
+- `setUp()`:
+  -  뷰컨트롤러의 루트뷰에 `MainView` 를 추가하고 `UI` 의 버튼들을 탭했을때 수행될 기능을 연결시켜주는 메서드
+- `func didTapClientAppend()`:
+  -  `UI`에서의 고객 10명 추가 버튼을 탭하면 실행될 메서드,은행(bank)의 `executeBankWork()`업무시작 메서드를 호출한다.
+- `func didTapClientReset()`:
+  -  `UI`에서의 초기화 버튼을 탭하면 대기중,업무중 스택뷰에 포함된 레이블을 모두 제거한후, 방문한 고객들을 전부 제거하는 메서드. 은행(bank)의 손님대기열(clientsQueue) 에서 초기화 해주는 `cleat()` 메서드를 호출한다.
+
+3️⃣ `protocol BankDelegate`
+- `bank(_ bank: Bank, shouldRecieve waitingClient: Client)`:
+  - 손님(Client)을 인자로 받아 손님의 정보를 토대로 Label 을 만든후 대기중 스택뷰에 추가하는 메서드
+- `bank(_ bank: Bank, shouldMoveToWorkingList workingClient: Client)`:
+  - 손님(Client)을 인자로 받아 손님의 정보를 토대로 Label 을 만든후 대기중 스택뷰에 만든 Label 의 text 와 일치하는 레이블을 대기중 스택뷰에서 제거한후 업무중 스택뷰에 추가하는 메섣, 
+- `bank(_ bank: Bank, shouldFinishWork client: Client)`
+  -  손님(Client)을 인자로 받아 업무중 스택뷰에서 손님의 정보와 일치하는 레이블을 제거하는 메서드. MainView의 remove() 메서드를 호출한다.
+
+### 고민한 점(트러블 슈팅)
+1️⃣ data 전달 방법(NotaficationCenter vs Delegate pattern)
+- STEP4에서는 `Bank` 발생하는 작업과 그에 대한 정보 변경을 VC가 알게 해야하고, UI에 반영해야한다.
+- `NotaficationCenter`
+    - `NotaficationCenter`방법은 일대다 통신 방법에서 유리하다. 즉, 일대다 통신 방법에 많이 사용된다. 
+    - 이번 프로젝트는 일대일 통신 방법에 가깝다.
+    - 따라서 `NotaficationCenter`를 사용하는 것이 옳지 않다.
+    - 또한, 값이 변경한 곳을 추적하기가 어렵다는 단정도 채택하지 않은 이유 중 하나가 됐다.
+- `Delegate pattern`
+    - 이번 프로젝트는 한 곳의 정보의 변경은 한 곳의 UI에 적용된다.
+    - 따라서 일대일 통신에 유리한 `Delegate pattern`이 적합하다고 판단했다.
+    - 또한, 정보의 흐름을 파악하기 편해서 동기, 비동기 처리를 경험하는 프로젝트에서 적합하다고 판단했다.
+    - protocol에 필요한 메서드를 명확히 명시한 것도 큰 장점 중 하나라고 판단했다.
+
+2️⃣ `Delegate pattern`과 naming
+- `Delegate pattern`을 제대로 구현한 경험이 적어서, naming에 고민이 많았다.
+- 때문에 apple의 delegate 메서드 스타일을 참고했다.
+
+![](https://i.imgur.com/sBL8pm1.png)
+
+- 위는 tableViewDelegate 메서드이다. 
+- apple은 tabelView delegate 메서드명을 
+  func <호출 객체의 인스턴스명>(<호출 객체의 타입>, <실행될 동작명: 정보>, <추가적인 정보명: 정보>)와 같은 방법으로 작명한 것을 볼 수 있다.
+- 이번 프로젝트에 위와 같은 방법을 적용하면 아래와 같은 네이밍을 할 수 있을 것 같다.
+
+```swift
+// protocol
+protocol BankDelegate: AnyObject {
+    func bank(_ bank: Bank, shouldRecieve waitingClient: Client)
+    func bank(_ bank: Bank, shouldMoveToWorkingList workingClient: Client)
+    func bank(_ bank: Bank, shouldFinishWork client: Client)
+}
+
+class Bank {
+    // delegate 프로퍼티
+    weak var delegate: BankDelegate?
+    
+    // 호출부
+    delegate?.bank(self, shouldRecieve: client)
+}
+```
+
+3️⃣ UI를 구성하는 객체 분리
+- 모든 UI를 코드로 구현하다 보니 VC의 코드가 길어졌고, 이것을 분리하는 방법을 고민했다.
+- UIView 를 상속받는 class `MainView`에 Layout관련 코드를 구현했다.
+- 이후, VC의 view위에 `MainView`의 인스턴스 view를 쌓는 방법을 생각했다.
+```swift
+view.addSubview(mainView)
+mainView.translatesAutoresizingMaskIntoConstraints = false
+NSLayoutConstraint.activate([
+    mainView.topAnchor.constraint(equalTo: view.topAnchor),
+    mainView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+    mainView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+    mainView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+])
+mainView.makeView()
+```
+- view.addSubview() 메서드를 통해 인스턴스 view를 추가해주고, NSLayoutConstraint를 통해 constraint을 설정해주었다. 
+
+
+### 배운 개념
+- `Delegate pattern`
+- `NotifycationCenter`
+- `NSLayoutConstraint`
+- `translatesAutoresizingMaskIntoConstraints`
 
 ---
 
