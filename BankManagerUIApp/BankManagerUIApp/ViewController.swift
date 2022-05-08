@@ -21,7 +21,7 @@ final class ViewController: UIViewController {
         self.view = mainView
         mainView.makeView()
         
-        bank.bankDelegate = self
+        bank.delegate = self
         
         mainView.addClientButton.addTarget(self, action: #selector(didTapClientAppend), for: .touchUpInside)
         mainView.resetButton.addTarget(self, action: #selector(didTapClientReset), for: .touchUpInside)
@@ -39,20 +39,22 @@ final class ViewController: UIViewController {
 }
 
 extension ViewController: BankDelegate {
-    func receive(_ waitingClient: Client) {
+    func bank(_ bank: Bank, shouldRecieve waitingClient: Client) {
         let waitingClientLabel = mainView.makeClientLabel(waitingClient)
         mainView.add(waitingClientLabel: waitingClientLabel)
     }
 
-    func moveToWorkingList(_ workingClient: Client) {
+    func bank(_ bank: Bank, shouldMoveToWorkingList workingClient: Client) {
         DispatchQueue.main.async { [self] in
             let workingClientLabel = mainView.makeClientLabel(workingClient)
             mainView.removeWaitingLabelAndAdd(workingClientLabel)
         }
     }
-
-    func finishWork(of client: Client) {
-        mainView.remove(client)
+    
+    func bank(_ bank: Bank, shouldFinishWork client: Client) {
+        DispatchQueue.main.async { [self] in
+            mainView.remove(client)
+        }
     }
 }
 

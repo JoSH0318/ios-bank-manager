@@ -8,9 +8,9 @@
 import Foundation
 
 protocol BankDelegate: AnyObject {
-    func receive(_ waitingClient: Client)
-    func moveToWorkingList(_ workingClient: Client)
-    func finishWork(of client: Client)
+    func bank(_ bank: Bank, shouldRecieve waitingClient: Client)
+    func bank(_ bank: Bank, shouldMoveToWorkingList workingClient: Client)
+    func bank(_ bank: Bank, shouldFinishWork client: Client)
 }
 
 final class Bank {
@@ -22,7 +22,7 @@ final class Bank {
     private(set) var loanClerksCount: Int
     private(set) var depositClerksCount: Int
     
-    weak var bankDelegate: BankDelegate?
+    weak var delegate: BankDelegate?
     
     init(loanClerksCount: Int, depositClerksCount: Int) {
         self.loanClerksCount = loanClerksCount
@@ -48,7 +48,7 @@ final class Bank {
     func receiveClients(_ numberOfPeople: Int = Int.random(in: 10...30)) {
         for order in 1...10 {
             let client = Client(order)
-            bankDelegate?.receive(client)
+            delegate?.bank(self, shouldRecieve: client)
             clientsQueue.enqueue(client)
         }
     }
@@ -73,16 +73,16 @@ final class Bank {
         switch client.requirementType {
         case .loan:
             loanClerksQueue.addOperation { [self] in
-                bankDelegate?.moveToWorkingList(client)
+                delegate?.bank(self, shouldMoveToWorkingList: client)
                 clerk.deal(with: client)
-                bankDelegate?.finishWork(of: client)
+                delegate?.bank(self, shouldFinishWork: client)
                 clerkGroup.leave()
             }
         case .deposit:
             depositClerksQueue.addOperation { [self] in
-                bankDelegate?.moveToWorkingList(client)
+                delegate?.bank(self, shouldMoveToWorkingList: client)
                 clerk.deal(with: client)
-                bankDelegate?.finishWork(of: client)
+                delegate?.bank(self, shouldFinishWork: client)
                 clerkGroup.leave()
             }
         }
