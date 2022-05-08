@@ -263,15 +263,13 @@ class MainView: UIView {
     }
     
     func remove(_ workingClient: Client) {
-        DispatchQueue.main.async { [self] in
-            guard let labelArray = workingListStackView.subviews as? [UILabel] else {
-                return
-            }
-            let label = "\(workingClient.orderNumber)-\(workingClient.requirementType.description)"
-            labelArray.forEach {
-                if $0.text == label {
-                    $0.removeFromSuperview()
-                }
+        guard let labelArray = workingListStackView.subviews as? [UILabel] else {
+            return
+        }
+        let label = "\(workingClient.orderNumber)-\(workingClient.requirementType.description)"
+        labelArray.forEach {
+            if $0.text == label {
+                $0.removeFromSuperview()
             }
         }
     }
