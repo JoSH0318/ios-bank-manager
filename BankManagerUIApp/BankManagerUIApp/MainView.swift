@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainView: UIView {
+final class MainView: UIView {
     //MARK: - button
     let addClientButton: UIButton = {
         let button = UIButton()
@@ -152,7 +152,7 @@ class MainView: UIView {
         self.backgroundColor = .white
     }
     
-    func configTotalStackView() {
+    private func configTotalStackView() {
         self.addSubview(totalStackView)
         
         buttonStackView.addArrangedSubview(addClientButton)
@@ -199,7 +199,7 @@ class MainView: UIView {
         NSLayoutConstraint.activate([leading, trailing, top, height])
     }
     
-    func configScrollView() {
+    private func configScrollView() {
         self.addSubview(scrollView)
         
         NSLayoutConstraint.activate([
@@ -211,7 +211,7 @@ class MainView: UIView {
         configListStackView()
     }
     
-    func configListStackView() {
+    private func configListStackView() {
         listStackView.addArrangedSubview(waitingListStackView)
         listStackView.addArrangedSubview(workingListStackView)
         scrollView.addSubview(listStackView)

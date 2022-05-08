@@ -45,7 +45,7 @@ final class Bank {
         }
     }
     
-    func receiveClients(_ numberOfPeople: Int = Int.random(in: 10...30)) {
+    private func receiveClients(_ numberOfPeople: Int = Int.random(in: 10...30)) {
         for order in 1...10 {
             let client = Client(order)
             delegate?.bank(self, shouldRecieve: client)
@@ -60,7 +60,7 @@ final class Bank {
         return interval
     }
     
-    func executeWork() {
+    private func executeWork() {
         loanClerksQueue.maxConcurrentOperationCount = loanClerksCount
         depositClerksQueue.maxConcurrentOperationCount = depositClerksCount
         while let client = clientsQueue.dequeue() {
